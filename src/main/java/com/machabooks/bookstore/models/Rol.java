@@ -20,5 +20,5 @@ public class Rol {
 	private Long id;
 
 	@Column(name = "name")
-	private String rolName;
+	private String name;
 }
