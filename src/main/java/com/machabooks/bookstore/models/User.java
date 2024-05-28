@@ -47,8 +47,10 @@ public class User {
 	private Double debt;
 
 	@Transient
-	@JsonProperty(access = Access.WRITE_ONLY)
 	private Boolean admin;
+
+	@Transient
+	private Boolean author;
 
 	@ManyToMany
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"), uniqueConstraints = {
@@ -58,5 +60,7 @@ public class User {
 	@PrePersist
 	public void prePersist() {
 		debt = 0.0;
+		admin = false;
+		author = false;
 	}
 }
