@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +46,31 @@ public class UserService {
 
 		repository.save(user);
 		return ResponseEntity.ok().body("Created");
+	}
+
+	public ResponseEntity<?> addAuthor(User user) {
+		List<Rol> currentUserRoles = user.getRoles();
+		currentUserRoles.add(rolRepository.findByName("AUTHOR").get());
+		repository.save(user);
+		return ResponseEntity.ok().body("Authro added");
+	}
+
+	public ResponseEntity<?> update(String email, User user) {
+		Optional<User> userDB = repository.findByEmail(email);
+		if (userDB.isPresent()) {
+			User userUpdated = userDB.get();
+
+			userUpdated.setId(user.getId());
+			userUpdated.setFirstName(user.getFirstName());
+			userUpdated.setLastName(user.getLastName());
+			userUpdated.setId(user.getId());
+			userUpdated.setPassword(user.getPassword());
+
+			repository.save(userUpdated);
+			return new ResponseEntity<>("User Updated " + userUpdated, HttpStatus.CREATED);
+
+		}
+		return new ResponseEntity<>("User not founded", HttpStatus.NOT_FOUND);
 	}
 
 }
