@@ -5,11 +5,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.machabooks.bookstore.models.User;
 import com.machabooks.bookstore.services.UserService;
+import com.machabooks.bookstore.utils.UserValidations.Validator;
+
+import jakarta.validation.Valid;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,13 +28,18 @@ public class UserController {
 	@Autowired
 	private UserService service;
 
+	private Validator validator = new Validator();
+
 	@GetMapping()
 	public List<User> userList() {
 		return service.findAll();
 	}
 
 	@PostMapping()
-	public ResponseEntity<?> create(@RequestBody User user) {
+	public ResponseEntity<?> create(@Valid @RequestBody User user, BindingResult result) {
+		if (result.hasErrors()) {
+			return validator.validation(result);
+		}
 		return service.create(user);
 	}
 
