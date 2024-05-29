@@ -40,6 +40,13 @@ public class UserService {
 		Optional<Rol> rol = rolRepository.findByName("USER");
 		List<Rol> roles = new ArrayList<>();
 
+		Optional<User> userEmail = repository.findByEmail(user.getEmail());
+		Optional<User> userId = repository.findById(user.getId());
+
+		if (userEmail.isPresent() || userId.isPresent()) {
+			return new ResponseEntity<>("The user with this id and email already exists", HttpStatus.BAD_REQUEST);
+		}
+
 		rol.ifPresent(roles::add);
 
 		user.setRoles(roles);
