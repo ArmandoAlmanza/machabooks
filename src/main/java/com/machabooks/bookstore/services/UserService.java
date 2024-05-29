@@ -48,29 +48,48 @@ public class UserService {
 		return ResponseEntity.ok().body("Created");
 	}
 
-	public ResponseEntity<?> addAuthor(User user) {
-		List<Rol> currentUserRoles = user.getRoles();
+	public ResponseEntity<?> addAuthor(String email) {
+		Optional<User> userDB = repository.findByEmail(email);
+
+		if (!userDB.isPresent()) {
+			return new ResponseEntity<>("User not founded", HttpStatus.NOT_FOUND);
+		}
+		User userUpdated = userDB.get();
+
+		List<Rol> currentUserRoles = userUpdated.getRoles();
 		currentUserRoles.add(rolRepository.findByName("AUTHOR").get());
-		repository.save(user);
-		return ResponseEntity.ok().body("Authro added");
+
+		userUpdated.setRoles(currentUserRoles);
+
+		repository.save(userUpdated);
+
+		return ResponseEntity.ok().body("Author added");
 	}
 
 	public ResponseEntity<?> update(String email, User user) {
 		Optional<User> userDB = repository.findByEmail(email);
-		if (userDB.isPresent()) {
-			User userUpdated = userDB.get();
-
-			userUpdated.setId(user.getId());
-			userUpdated.setFirstName(user.getFirstName());
-			userUpdated.setLastName(user.getLastName());
-			userUpdated.setId(user.getId());
-			userUpdated.setPassword(user.getPassword());
-
-			repository.save(userUpdated);
-			return new ResponseEntity<>("User Updated " + userUpdated, HttpStatus.CREATED);
-
+		if (!userDB.isPresent()) {
+			return new ResponseEntity<>("User not founded", HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>("User not founded", HttpStatus.NOT_FOUND);
+		User userUpdated = userDB.get();
+
+		userUpdated.setId(user.getId());
+		userUpdated.setFirstName(user.getFirstName());
+		userUpdated.setLastName(user.getLastName());
+		userUpdated.setId(user.getId());
+		userUpdated.setPassword(user.getPassword());
+
+		repository.save(userUpdated);
+		return new ResponseEntity<>("User Updated " + userUpdated, HttpStatus.CREATED);
+	}
+
+	public ResponseEntity<?> delete(String email) {
+		Optional<User> userDB = repository.findByEmail(email);
+		if (!userDB.isPresent()) {
+			return new ResponseEntity<>("User not founded", HttpStatus.NOT_FOUND);
+		}
+		repository.delete(userDB.get());
+		return ResponseEntity.ok().body("User deleted succesfully");
 	}
 
 }
