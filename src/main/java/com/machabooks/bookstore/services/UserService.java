@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -28,12 +27,12 @@ public class UserService {
 		return (List<User>) repository.findAll();
 	}
 
-	public User findByEmail(String email) throws NotFoundException {
+	public ResponseEntity<?> findByEmail(String email) {
 		Optional<User> userOptional = repository.findByEmail(email);
 		if (!userOptional.isPresent()) {
-			throw new NotFoundException();
+			return ResponseEntity.notFound().build();
 		}
-		return userOptional.get();
+		return ResponseEntity.ok().body(userOptional.get());
 	}
 
 	public ResponseEntity<?> create(User user) {
