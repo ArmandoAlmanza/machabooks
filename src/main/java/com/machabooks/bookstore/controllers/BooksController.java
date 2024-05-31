@@ -24,9 +24,14 @@ public class BooksController {
 		return service.findAll();
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/{sku}")
 	public ResponseEntity<?> findBySku(@PathVariable String sku) {
 		return service.findBySku(sku);
+	}
+
+	@GetMapping("/author/{email}")
+	public ResponseEntity<?> findByAuthor(@PathVariable String email) {
+		return service.findByAuthor(email);
 	}
 
 }

@@ -4,16 +4,22 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.machabooks.bookstore.models.Books;
+import com.machabooks.bookstore.models.User;
 import com.machabooks.bookstore.repositories.BookRepository;
+import com.machabooks.bookstore.repositories.UserRepository;
 
 @Service
 public class BookService {
 	@Autowired
 	private BookRepository repository;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	public List<Books> findAll() {
 		return (List<Books>) repository.findAll();
@@ -25,5 +31,19 @@ public class BookService {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok().body(bookDb.get());
+	}
+
+	public ResponseEntity<?> findByAuthor(String email) {
+		Optional<User> author = userRepository.findByEmail(email);
+		if (!author.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		Optional<Books> book = repository.findByAuthor(author.get());
+
+		if (!book.isPresent()) {
+			return new ResponseEntity<>("Sorry We don't have any book from that author", HttpStatus.NOT_FOUND);
+		}
+
+		return ResponseEntity.ok().body(book.get());
 	}
 }
