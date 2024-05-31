@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.machabooks.bookstore.models.Books;
-import com.machabooks.bookstore.repositories.BookRepository;
+import com.machabooks.bookstore.services.BookService;
 
 import java.util.List;
 
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequestMapping("/api/books")
 public class BooksController {
 	@Autowired
-	private BookRepository repository;
+	private BookService service;
 
 	@GetMapping()
 	public List<Books> getAll() {
-		return (List<Books>) repository.findAll();
+		return service.findAll();
 	}
 
 }
