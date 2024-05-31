@@ -9,7 +9,9 @@ import com.machabooks.bookstore.services.BookService;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api/books")
@@ -20,6 +22,11 @@ public class BooksController {
 	@GetMapping()
 	public List<Books> getAll() {
 		return service.findAll();
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<?> findBySku(@PathVariable String sku) {
+		return service.findBySku(sku);
 	}
 
 }
