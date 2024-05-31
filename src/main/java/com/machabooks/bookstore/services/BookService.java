@@ -1,5 +1,6 @@
 package com.machabooks.bookstore.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,8 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.machabooks.bookstore.models.Books;
+import com.machabooks.bookstore.models.Genre;
 import com.machabooks.bookstore.models.User;
 import com.machabooks.bookstore.repositories.BookRepository;
+import com.machabooks.bookstore.repositories.GenreRepository;
 import com.machabooks.bookstore.repositories.UserRepository;
 
 @Service
@@ -20,6 +23,9 @@ public class BookService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private GenreRepository genreRepository;
 
 	public List<Books> findAll() {
 		return (List<Books>) repository.findAll();
@@ -45,5 +51,13 @@ public class BookService {
 		}
 
 		return ResponseEntity.ok().body(book.get());
+	}
+
+	public ResponseEntity<?> create(Books book) {
+		Optional<Genre> currentGenre = genreRepository.findByName(book.getGenre());
+		List<Genre> genres = new ArrayList<>();
+
+		currentGenre.ifPresent(genres::add);
+		return new ResponseEntity<>("Book added succesfully", HttpStatus.CREATED);
 	}
 }
