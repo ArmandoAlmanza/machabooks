@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -53,6 +54,12 @@ public class Books {
 	@JoinColumn(name = "author")
 	@JsonBackReference
 	private User author;
+
+	@Transient
+	private String authorMail;
+
+	@Transient
+	private String genre;
 
 	@PrePersist
 	public void prePersist() {
