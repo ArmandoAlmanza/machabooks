@@ -54,7 +54,7 @@ public class BookService {
 	}
 
 	public ResponseEntity<?> create(Books book) {
-		Optional<Genre> currentGenre = genreRepository.findByName(book.getGenre());
+		Optional<Genre> currentGenre = genreRepository.findByName(book.getGenres());
 		List<Genre> genres = new ArrayList<>();
 
 		currentGenre.ifPresent(genres::add);
