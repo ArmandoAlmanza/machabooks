@@ -76,6 +76,10 @@ public class User {
 	@JsonManagedReference
 	private List<Books> bookList;
 
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference
+	private List<Loan> loans;
+
 	@PrePersist
 	public void prePersist() {
 		debt = 0.0;
