@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.machabooks.bookstore.models.Books;
+import com.machabooks.bookstore.models.DTO.BookDto;
 import com.machabooks.bookstore.services.BookService;
 
 import java.util.List;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api/books")
@@ -32,6 +35,11 @@ public class BooksController {
 	@GetMapping("/author/{email}")
 	public ResponseEntity<?> findByAuthor(@PathVariable String email) {
 		return service.findByAuthor(email);
+	}
+
+	@PostMapping()
+	public ResponseEntity<?> create(@RequestBody BookDto book) {
+		return service.create(book);
 	}
 
 }
