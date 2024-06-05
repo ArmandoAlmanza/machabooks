@@ -3,6 +3,7 @@ package com.machabooks.bookstore.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.machabooks.bookstore.models.Books;
 import com.machabooks.bookstore.models.Genre;
 import com.machabooks.bookstore.models.User;
+import com.machabooks.bookstore.models.DTO.BookDto;
 import com.machabooks.bookstore.repositories.BookRepository;
 import com.machabooks.bookstore.repositories.GenreRepository;
 import com.machabooks.bookstore.repositories.UserRepository;
@@ -53,11 +55,27 @@ public class BookService {
 		return ResponseEntity.ok().body(book.get());
 	}
 
-	public ResponseEntity<?> create(Books book) {
-		Optional<Genre> currentGenre = genreRepository.findByName(book.getGenres());
+	public ResponseEntity<?> create(BookDto bookDto) {
+		Books book = new Books();
 		List<Genre> genres = new ArrayList<>();
+		Optional<User> author = userRepository.findByEmail(bookDto.getEmail());
 
-		currentGenre.ifPresent(genres::add);
+		if (!author.isPresent()) {
+			return new ResponseEntity<>("Author not founded", HttpStatus.NOT_FOUND);
+		}
+
+		for (String genre : bookDto.getGenres()) {
+			Optional<Genre> currentGenre = genreRepository.findByName(genre);
+			currentGenre.ifPresent(genres::add);
+		}
+		book.setSku(UUID.randomUUID().toString());
+		book.setTitle(bookDto.getTitle());
+		book.setPubDate(bookDto.getPubDate());
+		book.setStock(bookDto.getStock());
+		book.setGenres(genres);
+		book.setAuthor(author.get());
+		
+		repository.save(book);
 		return new ResponseEntity<>("Book added succesfully", HttpStatus.CREATED);
 	}
 }
