@@ -25,6 +25,11 @@ public class LoanController {
 		return service.findAll();
 	}
 
+	@GetMapping("/{email}")
+	public ResponseEntity<?> findByUser(@PathVariable String email) {
+		return service.findByUser(email);
+	}
+
 	@PostMapping("/borrow/{email}/{sku}")
 	public ResponseEntity<?> create(@PathVariable String email, @PathVariable String sku) {
 		return service.create(email, sku);
