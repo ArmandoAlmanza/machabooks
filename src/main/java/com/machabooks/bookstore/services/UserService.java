@@ -3,14 +3,17 @@ package com.machabooks.bookstore.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.machabooks.bookstore.models.Rol;
 import com.machabooks.bookstore.models.User;
+import com.machabooks.bookstore.models.DTO.UserDTO;
 import com.machabooks.bookstore.repositories.RolRepository;
 import com.machabooks.bookstore.repositories.UserRepository;
 
@@ -23,16 +26,39 @@ public class UserService {
 	@Autowired
 	private RolRepository rolRepository;
 
+	@Transactional(readOnly = true)
 	public List<User> findAll() {
 		return (List<User>) repository.findAll();
 	}
 
+	@Transactional(readOnly = true)
+	public List<UserDTO> findAllDto() {
+		List<User> users = (List<User>) repository.findAll();
+		List<UserDTO> userDTOs = users.stream().map(
+				user -> {
+					UserDTO userDTO = new UserDTO();
+					userDTO.setEmail(user.getEmail());
+					userDTO.setName(user.getFirstName() + " " + user.getLastName());
+					userDTO.setDebt(user.getDebt());
+					userDTO.setRol(user.getRoles());
+					return userDTO;
+				}).collect(Collectors.toList());
+		return userDTOs;
+	}
+
+	@Transactional(readOnly = true)
 	public ResponseEntity<?> findByEmail(String email) {
 		Optional<User> userOptional = repository.findByEmail(email);
+		UserDTO userDTO = new UserDTO();
 		if (!userOptional.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok().body(userOptional.get());
+
+		userDTO.setEmail(email);
+		userDTO.setName(userOptional.get().getFirstName() + " " + userOptional.get().getLastName());
+		userDTO.setDebt(userOptional.get().getDebt());
+		userDTO.setRol(userOptional.get().getRoles());
+		return new ResponseEntity<>(userDTO, HttpStatus.OK);
 	}
 
 	public ResponseEntity<?> create(User user) {
