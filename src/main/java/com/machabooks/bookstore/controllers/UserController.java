@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.machabooks.bookstore.models.User;
+import com.machabooks.bookstore.models.DTO.UserDTO;
 import com.machabooks.bookstore.services.UserService;
 import com.machabooks.bookstore.utils.UserValidations.Validator;
 
@@ -30,9 +31,14 @@ public class UserController {
 
 	private Validator validator = new Validator();
 
-	@GetMapping()
+	@GetMapping("/admin/all")
 	public List<User> findAll() {
 		return service.findAll();
+	}
+
+	@GetMapping()
+	public List<UserDTO> findAllDto() {
+		return service.findAllDto();
 	}
 
 	@GetMapping("/{email}")
