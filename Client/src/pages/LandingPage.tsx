@@ -6,6 +6,7 @@ import {
     FaRightToBracket,
     FaUser,
 } from "react-icons/fa6";
+import racoon from "../assets/logo.png";
 
 const Home = () => {
     const links = [
@@ -97,7 +98,32 @@ const Home = () => {
                     ))}
                 </div>
             </section>
-            <footer className="flex flex-col md:flex-row justify-evenly gap-2 items-center content-center p-3">
+
+            <section className="p-4 mx-auto max-w-2xl grid place-items-center my-5">
+                <h1 className="text-[35px]">You are a writter?</h1>
+                <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
+                    <img
+                        src={racoon}
+                        alt="mapcha leyendo"
+                        className="md:w-1/2 rounded-tr-3xl rounded-bl-3xl"
+                    />
+                    <div className="grid gap-3 place-items-center place-content-center">
+                        <h2 className="text-[30px] font-bold">
+                            You can publish Your books here!
+                        </h2>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Harum, architecto quibusdam aspernatur itaque
+                            temporibus esse accusantium numquam impedit
+                            corrupti, molestiae facere voluptatibus facilis
+                            maiores cum mollitia pariatur veniam quaerat
+                            nostrum.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <footer className="flex flex-col md:flex-row justify-evenly gap-2 items-center content-center p-3 border-t border-t-white">
                 <h2>Made by Armando almanza</h2>
                 <nav className="flex justify-evenly gap-4 p-4">
                     {socials.map((social, i) => (
