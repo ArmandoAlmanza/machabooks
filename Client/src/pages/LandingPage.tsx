@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import {
+    FaBook,
+    FaBookOpenReader,
     FaGithub,
     FaInstagram,
     FaLinkedin,
@@ -100,7 +102,7 @@ const Home = () => {
             </section>
 
             <section className="p-4 mx-auto max-w-2xl grid place-items-center my-5">
-                <h1 className="text-[35px]">You are a writter?</h1>
+                <h1 className="text-[35px]">Are you a writter?</h1>
                 <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-center">
                     <img
                         src={racoon}
@@ -119,6 +121,16 @@ const Home = () => {
                             maiores cum mollitia pariatur veniam quaerat
                             nostrum.
                         </p>
+                        <Link
+                            className="border border-white rounded-[15px] w-fit py-[15px] px-[18px] my-3 group/link flex items-center content-center gap-2"
+                            to={"/auth"}
+                        >
+                            <span className="group-hover/link:text-violet-400 transition-colors ease-in-out duration-300 text-xl">
+                                Start Publishing{" "}
+                            </span>
+                            <FaBook className="translate-x-2 group-hover/link:translate-x-2 transition-[opacity, transform] ease-in-out duration-300 text-xl group-hover/link:opacity-0" />
+                            <FaBookOpenReader className="opacity-0 group-hover/link:-translate-x-5 transition-[opacity, transform] ease-in-out duration-300 text-xl group-hover/link:opacity-100" />
+                        </Link>
                     </div>
                 </div>
             </section>
