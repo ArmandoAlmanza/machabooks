@@ -9,6 +9,7 @@ import {
     FaUser,
 } from "react-icons/fa6";
 import racoon from "../assets/logo.png";
+import avatar from "../assets/avatar.png";
 
 const Home = () => {
     const links = [
@@ -80,7 +81,7 @@ const Home = () => {
                 <div className="flex flex-col md:flex-row justify-evenly gap-4 items-center">
                     {titles.map((card, i) => (
                         <article
-                            className="border border-white rounded-xl max-w-sm grid place-content-center"
+                            className="border border-white rounded-xl max-w-[300px] grid place-content-center"
                             key={i}
                         >
                             <header className="border-b border-b-white p-4">
@@ -96,6 +97,19 @@ const Home = () => {
                                     cumque ex vero animi!
                                 </p>
                             </main>
+                            <footer className="p-4">
+                                <h3 className="text-center border-b border-b-white">
+                                    User review
+                                </h3>
+                                <article className="flex gap-2 p-2 items-center max-w-md">
+                                    <img
+                                        className="max-w-[50px] rounded-full border border-orange-400"
+                                        src={avatar}
+                                        alt="testimonial photo"
+                                    />
+                                    <p>Machabooks is a pretty awesome app</p>
+                                </article>
+                            </footer>
                         </article>
                     ))}
                 </div>
