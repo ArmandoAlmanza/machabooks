@@ -103,6 +103,7 @@ const Home = () => {
                     {socials.map((social, i) => (
                         <Link
                             to={social.url}
+                            target="_blank"
                             key={i}
                             className="text-2xl transition-[colors, transform] ease-in-out duration-300 hover:scale-125 hover:text-violet-400"
                         >
