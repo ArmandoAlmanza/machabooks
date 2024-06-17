@@ -31,6 +31,20 @@ const Home = () => {
             icon: <FaInstagram />,
         },
     ];
+    const testimonials = [
+        {
+            name: "Marlen Ambros",
+            body: "Machabooks is a pretty awesome app. I recommend this to anyone who loves to read",
+        },
+        {
+            name: "Armando Almanza",
+            body: "Machabooks is a pretty awesome app. I recommend this to anyone who loves to read",
+        },
+        {
+            name: "Sergio Cholula",
+            body: "Machabooks is a pretty awesome app. I recommend this to anyone who loves to read",
+        },
+    ];
     return (
         <>
             <header className="flex flex-col md:flex-row justify-evenly items-center md:items-end px-4 py-8 content-center">
@@ -97,19 +111,6 @@ const Home = () => {
                                     cumque ex vero animi!
                                 </p>
                             </main>
-                            <footer className="p-4">
-                                <h3 className="text-center border-b border-b-white">
-                                    User review
-                                </h3>
-                                <article className="flex gap-2 p-2 items-center max-w-md">
-                                    <img
-                                        className="max-w-[50px] rounded-full border border-orange-400"
-                                        src={avatar}
-                                        alt="testimonial photo"
-                                    />
-                                    <p>Machabooks is a pretty awesome app</p>
-                                </article>
-                            </footer>
                         </article>
                     ))}
                 </div>
@@ -148,7 +149,30 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-
+            <section className="p-4 mx-auto max-w-2xl grid place-items-center my-5 overflow-x-scroll md:overflow-clip">
+                <h1 className=" text-[35px]">User review</h1>
+                <div className="flex justify-evenly gap-4 md:grid md:grid-cols-2">
+                    {testimonials.map((opinion, i) => (
+                        <article
+                            className="flex gap-2 p-2 items-center max-w-[500px] border border-white rounded-xl"
+                            key={i}
+                        >
+                            <img
+                                className="max-w-[70px] rounded-full border border-orange-400"
+                                src={avatar}
+                                alt="testimonial photo"
+                            />
+                            <div className="grid gap-2">
+                                <h2 className="text-xl font-bold">
+                                    {opinion.name}
+                                </h2>
+                                <p>{opinion.body}</p>
+                                <span>⭐⭐⭐⭐⭐</span>
+                            </div>
+                        </article>
+                    ))}
+                </div>
+            </section>
             <footer className="flex flex-col md:flex-row justify-evenly gap-2 items-center content-center p-3 border-t border-t-white">
                 <h2>Made by Armando almanza</h2>
                 <nav className="flex justify-evenly gap-4 p-4">
