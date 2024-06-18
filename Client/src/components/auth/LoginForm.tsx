@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Button from "../generals/Button";
 
 interface htmlFormProps {
     setState: () => void;
@@ -51,18 +52,14 @@ const LoginForm = ({ setState }: htmlFormProps) => {
 
                     <div className="flex flex-col gap-3 md:gap-0 justify-between items-center md:flex-row">
                         <p
-                            className="ms-2 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500 cursor-pointer"
+                            className="ms-2 text-sm font-medium text-blue-500 hover:underline dark:text-blue-400 cursor-pointer"
                             onClick={setState}
                         >
                             You don't have an account?
                         </p>
-                        <button
-                            type="button"
-                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            onClick={handleClick}
-                        >
-                            Submit
-                        </button>
+                        <Button onClick={handleClick} className="px-5 py-2.5 focus:ring-4 focus:outline-none focus:ring-black hover:text-black hover:bg-blue-200 transition-colors duration-300" >
+                            <span>Submit</span>
+                        </Button>
                     </div>
                 </fieldset>
             </form>
