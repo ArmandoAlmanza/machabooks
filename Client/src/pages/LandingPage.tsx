@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa6";
 import racoon from "../assets/logo.png";
 import avatar from "../assets/avatar.png";
+import machape from "../assets/machawhite.png";
 
 const Home = () => {
     const links = [
@@ -42,6 +43,10 @@ const Home = () => {
         },
         {
             name: "Sergio Cholula",
+            body: "Machabooks is a pretty awesome app. I recommend this to anyone who loves to read",
+        },
+        {
+            name: "Ivan Espiritu",
             body: "Machabooks is a pretty awesome app. I recommend this to anyone who loves to read",
         },
     ];
@@ -84,7 +89,7 @@ const Home = () => {
                     </div>
                     <img
                         className="md:w-1/2 rounded-tr-3xl rounded-bl-3xl"
-                        src="https://th.bing.com/th/id/OIP.xpw9XeB4YEpgD44xgLzkcAHaHa?rs=1&pid=ImgDetMain"
+                        src={machape}
                         alt="logo"
                     />
                 </div>
@@ -149,12 +154,12 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            <section className="p-4 mx-auto max-w-2xl grid place-items-center my-5 overflow-x-scroll md:overflow-clip">
+            <section className="p-4 mx-auto max-w-2xl md:max-w-max grid place-items-center my-5 overflow-x-scroll md:overflow-clip">
                 <h1 className=" text-[35px]">User review</h1>
                 <div className="flex justify-evenly gap-4 md:grid md:grid-cols-2">
                     {testimonials.map((opinion, i) => (
                         <article
-                            className="flex gap-2 p-2 items-center max-w-[500px] border border-white rounded-xl"
+                            className="flex gap-2 p-2 items-center border border-white rounded-xl"
                             key={i}
                         >
                             <img
@@ -167,7 +172,7 @@ const Home = () => {
                                     {opinion.name}
                                 </h2>
                                 <p>{opinion.body}</p>
-                                <span>⭐⭐⭐⭐⭐</span>
+                                <span className="text-center">⭐⭐⭐⭐⭐</span>
                             </div>
                         </article>
                     ))}
