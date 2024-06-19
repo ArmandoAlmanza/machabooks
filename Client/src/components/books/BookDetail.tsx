@@ -106,7 +106,7 @@ const Book = () => {
                                 alt="cover"
                                 className="max-w-[100px] md:max-w-[150px] select-none"
                             />
-                            <Button className="py-[7px] px-[15px] my-3 group/link">
+                            <Button className="py-[5px] px-[10px] my-3 group/link">
                                 <span className="group-hover/link:text-violet-400 transition-colors ease-in-out duration-300 text-xl">
                                     Buy Now{" "}
                                 </span>

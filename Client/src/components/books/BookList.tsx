@@ -14,7 +14,7 @@ const BookList = () => {
                 Welcome to our library!
             </h1>
             <FilterBar />
-            <div className="my-4 border border-white p-4 container grid gap-4 max-w-[800px] max-h-[950px] md:max-h-[1000px] overflow-y-scroll">
+            <div className="my-4 border border-white p-4 container grid gap-4 max-w-[800px] max-h-[950px] md:max-h-[1055px] overflow-y-scroll">
                 {books.map((book, i) => (
                     <article
                         key={i}
