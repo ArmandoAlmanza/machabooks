@@ -139,7 +139,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            <section className="p-4 mx-auto max-w-2xl md:max-w-max grid place-items-center my-5 overflow-x-scroll md:overflow-clip">
+            <section className="p-4 mx-auto max-w-2xl md:max-w-max grid place-items-center my-5 overflow-x-scroll md:overflow-clip scroll">
                 <h1 className=" text-[35px]">User review</h1>
                 <div className="flex justify-evenly gap-4 md:grid md:grid-cols-2">
                     {testimonials.map((opinion, i) => (
