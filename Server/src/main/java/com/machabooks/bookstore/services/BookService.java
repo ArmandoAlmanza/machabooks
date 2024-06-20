@@ -1,5 +1,9 @@
 package com.machabooks.bookstore.services;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.machabooks.bookstore.models.Books;
 import com.machabooks.bookstore.models.Genre;
@@ -55,7 +60,7 @@ public class BookService {
 		return ResponseEntity.ok().body(book.get());
 	}
 
-	public ResponseEntity<?> create(BookDto bookDto) {
+	public ResponseEntity<?> create(BookDto bookDto, MultipartFile file) {
 		Books book = new Books();
 		List<Genre> genres = new ArrayList<>();
 		Optional<User> author = userRepository.findByEmail(bookDto.getEmail());
@@ -74,8 +79,37 @@ public class BookService {
 		book.setStock(bookDto.getStock());
 		book.setGenres(genres);
 		book.setAuthor(author.get());
-		
+
 		repository.save(book);
+
+		if (!file.isEmpty()) {
+			addCover(book.getSku(), file);
+		}
+
 		return new ResponseEntity<>("Book added succesfully", HttpStatus.CREATED);
+	}
+
+	public ResponseEntity<?> addCover(String sku, MultipartFile file) {
+		Books book = repository.findBySku(sku).orElseThrow(() -> new RuntimeException("Book not found"));
+		try {
+
+			File uploadDir = new File("/home/machabooks/covers/");
+			if (!uploadDir.exists()) {
+				uploadDir.mkdirs();
+			}
+			String fileName = sku + "-cover-" + book.getTitle().substring(0, 3).trim();
+
+			Path filePath = Paths.get("/home/machabooks/covers/", fileName);
+
+			Files.copy(file.getInputStream(), filePath);
+
+			book.setCover(filePath.toString());
+			repository.save(book);
+			return new ResponseEntity<>("Book and cover register gratefully", HttpStatus.CREATED);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
