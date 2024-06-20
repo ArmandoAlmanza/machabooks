@@ -2,6 +2,7 @@ package com.machabooks.bookstore.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.machabooks.bookstore.models.Books;
 import com.machabooks.bookstore.models.DTO.BookDto;
@@ -38,8 +39,13 @@ public class BooksController {
 	}
 
 	@PostMapping()
-	public ResponseEntity<?> create(@RequestBody BookDto book) {
-		return service.create(book);
+	public ResponseEntity<?> create(@RequestBody BookDto book, @PathVariable MultipartFile file) {
+		return service.create(book, file);
+	}
+
+	@PostMapping("/{sku}/cover")
+	public ResponseEntity<?> addCover(@PathVariable String sku, @PathVariable MultipartFile file) {
+		return service.addCover(sku, file);
 	}
 
 }
