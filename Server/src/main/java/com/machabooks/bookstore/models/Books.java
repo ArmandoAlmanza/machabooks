@@ -48,6 +48,9 @@ public class Books {
 	@Column(name = "stock")
 	private Integer stock;
 
+	@Column(name = "cover")
+	private String cover;
+
 	@ManyToMany
 	@JoinTable(name = "book_genre", joinColumns = @JoinColumn(name = "book_sku"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
 	private List<Genre> genres;
@@ -65,6 +68,7 @@ public class Books {
 	public void prePersist() {
 		stock = 0;
 		pubDate = LocalDate.now();
+		cover = "/default.png";
 	}
 
 }
