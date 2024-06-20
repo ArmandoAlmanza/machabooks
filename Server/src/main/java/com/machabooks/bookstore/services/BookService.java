@@ -110,6 +110,6 @@ public class BookService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 }
